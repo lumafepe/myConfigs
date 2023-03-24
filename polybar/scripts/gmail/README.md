@@ -29,7 +29,7 @@ mv polybar-gmail-master gmail
 and obtain/refresh credentials
 
 ```sh
-~/.config/polybar/gmail/auth.py
+~/.config/polybar/scripts/gmail/auth.py
 ```
 
 ### Module
