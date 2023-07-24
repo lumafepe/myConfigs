@@ -37,21 +37,20 @@ set $right ç
 #################                          Single and Dual screen                                   #################
 #####################################################################################################################
 
-# use xrandr and/or arandr to know the names of your monitors
-exec --no-startup-id xrandr --output eDP-1 --auto --left-of HDMI-1 --auto
-
-
 set $firstMonitor eDP-1
 set $secondMonitor HDMI-1
+
+# use xrandr and/or arandr to know the names of your monitors
+exec --no-startup-id xrandr --output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0) --auto --left-of $(sh /home/luismfp/.config/i3/scripts/monitors.sh 1) --auto
 
 #Use Super+Alt+p to change monitor layout
 
 bindsym $mod+mod1+p mode "screen_setup"
 mode "screen_setup" {
-	bindsym Left exec --no-startup-id xrandr --output eDP-1 --auto --left-of HDMI-1 --auto
-	bindsym Right exec --no-startup-id xrandr --output eDP-1 --auto --right-of HDMI-1 --auto
-	bindsym v exec --no-startup-id xrandr --output eDP-1 --auto --below HDMI-1 --auto
-	bindsym m exec --no-startup-id xrandr --output eDP-1 --same-as HDMI-1 --auto
+	bindsym Left exec --no-startup-id xrandr --output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0) --auto --left-of $(sh /home/luismfp/.config/i3/scripts/monitors.sh 1) --auto
+	bindsym Right exec --no-startup-id xrandr --output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0) --auto --right-of $(sh /home/luismfp/.config/i3/scripts/monitors.sh 1) --auto
+	bindsym v exec --no-startup-id xrandr --output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0) --auto --below $(sh /home/luismfp/.config/i3/scripts/monitors.sh 1) --auto
+	bindsym m exec --no-startup-id xrandr --output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0) --same-as $(sh /home/luismfp/.config/i3/scripts/monitors.sh 1) --auto
 
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
@@ -77,20 +76,21 @@ mode "background" {
 #################                                 Workspace                                         #################
 #####################################################################################################################
 
-workspace 1 output $firstMonitor
-workspace 2 output $firstMonitor
-workspace 3 output $firstMonitor
-workspace 4 output $firstMonitor
-workspace 5 output $firstMonitor
-workspace 6 output $firstMonitor
-workspace 7 output $firstMonitor
-workspace 8 output $firstMonitor
-workspace 9 output $firstMonitor
-workspace 10 output $firstMonitor
+exec --no-startup-id i3-msg "workspace 1 output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0)"
+exec --no-startup-id i3-msg "workspace 2 output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0)"
+exec --no-startup-id i3-msg "workspace 3 output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0)"
+exec --no-startup-id i3-msg "workspace 4 output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0)"
+exec --no-startup-id i3-msg "workspace 5 output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0)"
+exec --no-startup-id i3-msg "workspace 6 output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0)"
+exec --no-startup-id i3-msg "workspace 7 output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0)"
+exec --no-startup-id i3-msg "workspace 8 output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0)"
+exec --no-startup-id i3-msg "workspace 9 output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0)"
+exec --no-startup-id i3-msg "workspace 10 output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0)"
+
 
 #move workspace to secondMonitor
-bindsym $mod+m move workspace to output $secondMonitor
-bindsym $mod+Mod1+m move workspace to output $firstMonitor
+bindsym $mod+m exec i3-msg "move workspace to output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 1)"
+bindsym $mod+Mod1+m exec i3-msg "move workspace to output $(sh /home/luismfp/.config/i3/scripts/monitors.sh 0)"
 
 
 # switch to workspace>
@@ -105,7 +105,7 @@ bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
-# move focused container to workspace
+# move focused container to workspace and focus on new workspace
 bindsym $mod+Shift+1 move container to workspace 1; workspace 1
 bindsym $mod+Shift+2 move container to workspace 2; workspace 2
 bindsym $mod+Shift+3 move container to workspace 3; workspace 3
@@ -116,6 +116,18 @@ bindsym $mod+Shift+7 move container to workspace 7; workspace 7
 bindsym $mod+Shift+8 move container to workspace 8; workspace 8
 bindsym $mod+Shift+9 move container to workspace 9; workspace 9
 bindsym $mod+Shift+0 move container to workspace 10; workspace 10
+
+# move focused container to workspace
+bindsym $mod+Ctrl+Shift+1 move container to workspace 1
+bindsym $mod+Ctrl+Shift+2 move container to workspace 2
+bindsym $mod+Ctrl+Shift+3 move container to workspace 3
+bindsym $mod+Ctrl+Shift+4 move container to workspace 4
+bindsym $mod+Ctrl+Shift+5 move container to workspace 5
+bindsym $mod+Ctrl+Shift+6 move container to workspace 6
+bindsym $mod+Ctrl+Shift+7 move container to workspace 7
+bindsym $mod+Ctrl+Shift+8 move container to workspace 8
+bindsym $mod+Ctrl+Shift+9 move container to workspace 9
+bindsym $mod+Ctrl+Shift+0 move container to workspace 10
 
 
 #####################################################################################################################
@@ -205,7 +217,7 @@ bindsym Mod1+Ctrl+Right workspace next
 bindsym Mod1+Ctrl+Left workspace prev
 
 ## switch to workspace with urgent window automatically
-for_window [urgent=latest] focus
+#for_window [urgent=latest] focus
 
 #####################################################################################################################
 #################                          Tiling parameters                                        #################
@@ -230,9 +242,6 @@ bindsym $mod+s layout stacking
 bindsym $mod+z layout tabbed
 bindsym $mod+e layout toggle split
 
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
 
 #####################################################################################################################
 ################                          resize                                                   #################
@@ -296,7 +305,7 @@ font pango:Noto Mono Regular 13
 # Workspace 9 email clients
 #assign [class="Geary|Evolution"]                                                    → 9
 
-# Workspace 10 music related
+# workspace 10 music related
 #assign [class="Spotify|spotify"]                                                    → 10
 #fix for spotify not moving to workspace 10
 #for_window [class="Spotify"] move to workspace 10
@@ -308,8 +317,12 @@ font pango:Noto Mono Regular 13
 #################           autostart   -    execute applications at boot time                      #################
 #####################################################################################################################
 
+
 # Autotiling
 exec_always --no-startup-id autotiling
+
+#Battery notification
+exec --no-startup-id i3-battery-popup
 
 # Notifications
 exec --no-startup-id dunst &
@@ -337,6 +350,9 @@ exec --no-startup-id nm-applet
 # Clipboard
 exec --no-startup-id clipit &
 
+#Gestures
+exec --no-startup-id libinput-gestures &
+
 # Sreenshot
 exec --no-startup-id flameshot
 
@@ -345,7 +361,6 @@ exec --no-startup-id slimbookbattery --minimize &
 
 #graphics card manager
 exec --no-startup-id  optimus-manager-qt 
-
 #####################################################################################################################
 #################                          applications keyboard shortcuts                          #################
 #####################################################################################################################
@@ -362,19 +377,19 @@ bindsym control+Shift+Escape exec --no-startup-id kitty htop;focus
 
 
 #Discord
-bindsym $mod+control+Shift+d exec --no-startup-id discord
+bindsym $mod+control+Shift+d exec --no-startup-id discord;focus
 #Spotify
-bindsym $mod+control+Shift+s exec --no-startup-id spotify
+bindsym $mod+control+Shift+s exec --no-startup-id spotify;focus
 #Firefox
-bindsym $mod+control+Shift+f exec --no-startup-id firefox
+bindsym $mod+control+Shift+f exec --no-startup-id firefox;focus
 #Pavucontrol
-bindsym $mod+control+Shift+p exec --no-startup-id pavucontrol
+bindsym $mod+control+Shift+p exec --no-startup-id pavucontrol;focus
 #Code
-bindsym $mod+control+Shift+c exec --no-startup-id code
+bindsym $mod+control+Shift+c exec --no-startup-id code;focus
 #Thunar
-bindsym $mod+control+Shift+t exec --no-startup-id thunar
+bindsym $mod+control+Shift+t exec --no-startup-id thunar;focus
 #Gimp
-bindsym $mod+control+Shift+k exec --no-startup-id gimp
+bindsym $mod+control+Shift+k exec --no-startup-id gimp;focus
 
 
 #####################################################################################################################
@@ -383,13 +398,22 @@ bindsym $mod+control+Shift+k exec --no-startup-id gimp
 
 bindsym Print exec --no-startup-id flameshot gui
 
+
+
+#####################################################################################################################
+#################                          keyboard                                              #################
+#####################################################################################################################
+bindsym $mod+space exec  ~/.config/i3/scripts/toggle_keyaboard_layout.sh  
+
+
+
 #####################################################################################################################
 #################                          audio settings                                           #################
 #####################################################################################################################
 
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pulse sset Master '5%+'"
-bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse sset Master '5%-'"
+bindsym XF86AudioLowerVolume exec --no-startu;focusp-id "amixer -D pulse sset Master '5%-'"
 bindsym XF86AudioMute exec --no-startup-id "amixer -D pulse set Master toggle"
 #https://github.com/acrisci/playerctl/
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
@@ -400,6 +424,10 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 #####################################################################################################################
 #################                          xbacklight                                               #################
 #####################################################################################################################
+
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5
+
 
 bindsym $mod+F12 exec --no-startup-id xbacklight -inc 20 # increase screen brightness
 bindsym $mod+F11 exec --no-startup-id xbacklight -dec 20 # decrease screen brightness
