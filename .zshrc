@@ -82,6 +82,9 @@ plugins=(git z zsh-autosuggestions vscode colorize thefuck)
 
 source $ZSH/oh-my-zsh.sh
 
+
+#nvm
+source /usr/share/nvm/init-nvm.sh
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -128,13 +131,20 @@ alias pls="sudo"
 alias f="fuck"
 
 
+
+#haslab stuf
+alias sshIdina="ssh gsd@idinaportas.lsd.di.uminho.pt"
+
+
+
+
 # -- START ACTIVESTATE INSTALLATION
 # -- STOP ACTIVESTATE INSTALLATION
 # -- START ACTIVESTATE DEFAULT RUNTIME ENVIRONMENT
 export PATH="/home/luismfp/.cache/activestate/bin:$PATH"
 # -- STOP ACTIVESTATE DEFAULT RUNTIME ENVIRONMENT
 export PATH="$PATH:$HOME/.config/composer/vendor/bin"
-
+export PATH="/home/luismfp/.local/bin:$PATH"
 export PATH="/home/luismfp/Ndless/ndless-sdk/toolchain/install/bin:/home/luismfp/Ndless/ndless-sdk/bin:$PATH"
 export JAVA_HOME="/usr/lib/jvm/java-17-openjdk"
 export PATH=$JAVA_HOME/bin:$PATH
@@ -155,4 +165,4 @@ eval $(thefuck --alias)
 
 . /opt/asdf-vm/asdf.sh
 
-[ -f "/home/luismfp/.ghcup/env" ] && source "/home/luismfp/.ghcup/env" # ghcup-env
+[ -f "/home/luismfp/.ghcup/env" ] && source "/home/luismfp/.ghcup/env" # ghcup-envsource /usr/share/nvm/init-nvm.sh
