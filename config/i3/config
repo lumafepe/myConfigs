@@ -334,7 +334,7 @@ exec_always --no-startup-id numlockx on
 exec_always --no-startup-id ~/.config/polybar/multi_monitor_launch.sh &
 
 # Set Walpaper
-exec_always --no-startup-id feh --bg-fill ~/.config/i3/time-abstract.jpg &
+exec_always --no-startup-id feh --bg-fill ~/.config/i3/backgrounds/time-abstract.jpg &
 
 # TRAY APPLICATIONS
 
